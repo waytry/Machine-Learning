@@ -53,8 +53,8 @@ for i in range(nrows):
 wb2.save("test2.xls")
 ```
 
-## openpyxl
-Referece:
+## OpenPyXL
+Referece:  
 [python用openpyxl操作excel](https://blog.csdn.net/longshenlmj/article/details/51706010)  
 [OpenPyXL official tutorial](https://openpyxl.readthedocs.io/en/stable/tutorial.html#playing-with-data)  
 
