@@ -53,3 +53,28 @@ for i in range(nrows):
 wb2.save("test2.xls")
 ```
 
+## openpyxl
+
+Open an excel file and get one of the sheets
+```python
+import openpyxl
+
+wb1 = openpyxl.load_workbook("test1.xlsx")
+wb1_sheet_names = wb1.sheetnames
+wb1_sheet =wb1[wb1_sheet_names[1]]
+# sheet=wb1.worksheets[0]
+```
+
+Access data
+```python
+a = wb1_sheet['A2']             # access data by cell
+a = wb1_sheet['A2':'D4']
+a = ws.cell(row=4, column=2, value=10)
+wb1_sheet['A2'] = 3
+
+b = wb1_sheet['A']              # access data by column
+b = wb1_sheet['A':'D']
+
+c = wb1_sheet[3]              # access data by column
+c = wb1_sheet[3:5]
+```
