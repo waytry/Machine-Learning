@@ -54,6 +54,9 @@ wb2.save("test2.xls")
 ```
 
 ## openpyxl
+Referece:
+[python用openpyxl操作excel](https://blog.csdn.net/longshenlmj/article/details/51706010)  
+[OpenPyXL official tutorial](https://openpyxl.readthedocs.io/en/stable/tutorial.html#playing-with-data)  
 
 Open an excel file and get one of the sheets
 ```python
@@ -61,12 +64,24 @@ import openpyxl
 
 wb1 = openpyxl.load_workbook("test1.xlsx")
 wb1_sheet_names = wb1.sheetnames
-wb1_sheet =wb1[wb1_sheet_names[1]]
-# sheet=wb1.worksheets[0]
+wb1_sheet = wb1[wb1_sheet_names[1]]
+# sheet = wb1.worksheets[0]
+
+# wb1_sheet.title
+# nrows = wb1_sheet.max_row
+# ncolumns = wb1_sheet.max_column
 ```
 
 Access data
 ```python
+wb1_sheet_data = []             # access all data
+for row in wb1_sheet.rows:
+    row_data = []
+    for cell in row:
+        row_data.append(cell.value)
+    wb1_sheet_data.append(row_data)
+wb1_sheet_data = np.array(wb1_sheet_data)       # converting to a np array becayse 2D list cann't do index slicing
+
 a = wb1_sheet['A2']             # access data by cell
 a = wb1_sheet['A2':'D4']
 a = ws.cell(row=4, column=2, value=10)
@@ -75,6 +90,19 @@ wb1_sheet['A2'] = 3
 b = wb1_sheet['A']              # access data by column
 b = wb1_sheet['A':'D']
 
-c = wb1_sheet[3]              # access data by column
+c = wb1_sheet[3]                # access data by row
 c = wb1_sheet[3:5]
+```
+
+Write and save data
+```python
+wb1_sheet_data_extracted = wb1_sheet_data[0:5, 0:3]     # extract useful data
+
+nrows = len(wb1_sheet_data_extracted)
+ncols = len(wb1_sheet_data_extracted[0])
+for i in range(nrows):
+    for j in range(ncols):
+        wb2_sheet.cell(row=i+1,column=j+1).value = wb1_sheet_data_extracted[i,j]    # write data to each cell
+
+wb2.save("test2.xlsx")
 ```
